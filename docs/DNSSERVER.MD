@@ -309,4 +309,4 @@ dig @10.10.10.10 dns.masterlab.com A +norec
 dig -x 10.10.10.20 @10.10.10.10 +norec
 ```
 
-[Voltar](../README.md)
+[Voltar](/)

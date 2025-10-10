@@ -46,5 +46,5 @@ Este repositório contém um laboratório prático originado à partir das prát
 
 ## Configurações dos Servidores
 
-- [Configuração DNS Server](docs/DNSSERVER.md)
-- [Configuração Web Server](docs/WEBSERVER.md)
+- [Configuração DNS Server](docs/DNSSERVER.MD)
+- [Configuração Web Server](docs/WEBSERVER.MD)

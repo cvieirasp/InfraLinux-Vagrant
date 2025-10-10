@@ -222,4 +222,4 @@ curl http://web.financeiro.masterlab.com | head
 curl http://web.rh.masterlab.com | head
 ```
 
-[Voltar](../README.md)
+[Voltar](/)
