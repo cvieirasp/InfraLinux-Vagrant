@@ -5,6 +5,7 @@ Este repositório contém um laboratório prático originado à partir das prát
 - **dns:** Rocky Linux 9 com BIND (named) instalado e serviço ativo.
 - **web:** Rocky Linux 9 com Apache (httpd) instalado e serviço ativo.
 - **client:** Ubuntu 22.04 com utilitários de rede.
+- **nginx:** Rocky Linux 9 com Nginx instalado e serviço ativo.
 
 ## Objetivos do laboratório
 
@@ -12,16 +13,18 @@ Este repositório contém um laboratório prático originado à partir das prát
 - Entender o papel de cada servidor no ecossistema:
   - Servidor DNS autoritativo (BIND) - conceito de zonas direta/reversa.
   - Servidor Web (Apache) - conceitos de serviço e diretórios padrão.
+  - Servidor Proxy (Nginx) - conceitos do uso do Nginx como proxy reverso.
   - Cliente Ubuntu - Máquina cliente para testes dos serviços dentro da rede.
 - Operar VMs com Vagrant: subir, acessar, pausar e destruir o ambiente de forma reprodutível.
 
 ## Topologia e parâmetros
 
-| Hostname              | SO            | Função        | IP (rede privada) |
-| --------------------- | ------------- | ------------- | ----------------- |
-| dns.masterlab.com     | Rocky Linux 9 | DNS (BIND)    | 10.10.10.10       |
-| web.masterlab.com     | Rocky Linux 9 | WEB (Apache)  | 10.10.10.20       |
-| client.masterlab.com  | ubuntu 22.04  | DNS (BIND)    | 10.10.10.30       |
+| Hostname              | SO            | Função                | IP (rede privada) |
+| --------------------- | ------------- | --------------------- | ----------------- |
+| dns.masterlab.com     | Rocky Linux 9 | DNS (BIND)            | 10.10.10.10       |
+| web.masterlab.com     | Rocky Linux 9 | WEB (Apache)          | 10.10.10.20       |
+| client.masterlab.com  | ubuntu 22.04  | Cliente               | 10.10.10.30       |
+| nginx.masterlab.com   | Rocky Linux 9 | Proxy Reverso (NGINX) | 10.10.10.40       |
 
 > As VMs usam rede privada (10.10.10.0/24) apenas para comunicação entre elas e o adaptador NAT padrão do Vagrant é mantido para acesso à internet/updates.
 
@@ -35,11 +38,12 @@ Este repositório contém um laboratório prático originado à partir das prát
 1. Obtenha o projeto realizando download/clonagem do repositório para uma pasta local.
 2. Suba o ambiente no diretório onde encontra-se o arquivo ```Vagrantfile``` utilizando os seguintes comandos:
   - ```vagrant up``` (sobe todas as VMs) ou
-  - ```vagrant dns```, ```vagrant up web```, ```vagrant up client``` (uma por vez).
+  - ```vagrant dns```, ```vagrant up web```, ```vagrant up client```, ```vagrant up nginx``` (uma por vez).
 3. Acesse as VMs:
   -  ```vagrant ssh dns```
   -  ```vagrant ssh web```
   -  ```vagrant ssh client```
+  -  ```vagrant ssh nginx```
 4. Encerrar/suspender quando terminar
   - ```vagrant halt``` (desliga) ou ```vagrant suspend``` (suspende).
   - ```vagrant destroy``` (remove as VMs) quando quiser recriar do zero.
@@ -48,3 +52,4 @@ Este repositório contém um laboratório prático originado à partir das prát
 
 - [Configuração DNS Server](docs/DNSSERVER.MD)
 - [Configuração Web Server](docs/WEBSERVER.MD)
+- [Configuração Proxy Server](docs/PROXYSERVER.MD)

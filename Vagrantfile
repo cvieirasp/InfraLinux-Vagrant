@@ -66,6 +66,36 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
+  # ====== NGINX: Rocky Linux 9 + Nginx ======
+  config.vm.define "nginx" do |nginx|
+    nginx.vm.box = "rockylinux/9"
+    nginx.vm.hostname = "nginx.lab.local"
+    nginx.vm.network "private_network", ip: "10.10.10.40"
+
+    nginx.vm.provider "virtualbox" do |vb|
+      vb.name = "lab-nginx"
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+
+    # Provisionamento: instala e habilita o Nginx
+    nginx.vm.provision "shell", inline: <<-SHELL
+      sudo dnf -y update
+      sudo dnf -y install nginx
+
+      # Habilita/ativa firewall e libera HTTP
+      sudo systemctl enable --now firewalld
+      sudo firewall-cmd --permanent --add-service=http
+      sudo firewall-cmd --reload
+
+      sudo systemctl enable nginx
+      sudo systemctl start nginx
+      
+      # Página simples para validar
+      echo "OK - Nginx on $(hostname) ($(hostname -I))" | sudo tee /usr/share/nginx/html/index.html
+    SHELL
+  end
+
   # ====== CLIENT: Ubuntu 22.04 ======
   config.vm.define "client" do |client|
     client.vm.box = "ubuntu/jammy64"
