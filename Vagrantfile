@@ -6,9 +6,9 @@ Vagrant.configure("2") do |config|
 
   # ====== DNS: Rocky Linux 9 + BIND (named) ======
   config.vm.define "dns" do |dns|
-    dns.vm.box = "generic/rocky9"
+    dns.vm.box = "rockylinux/9"
     dns.vm.hostname = "dns.lab.local"
-    dns.vm.network "private_network", ip: "10.10.10.10"
+    dns.vm.network "private_network", ip: "10.10.10.10", guest: 22, host: 2222, id: "ssh", auto_correct: true
 
     dns.vm.provider "virtualbox" do |vb|
       vb.name = "lab-dns"
@@ -37,9 +37,9 @@ Vagrant.configure("2") do |config|
 
   # ====== WEB: Rocky Linux 9 + Apache (httpd) ======
   config.vm.define "web" do |web|
-    web.vm.box = "generic/rocky9"
+    web.vm.box = "rockylinux/9"
     web.vm.hostname = "web.lab.local"
-    web.vm.network "private_network", ip: "10.10.10.20"
+    web.vm.network "private_network", ip: "10.10.10.20", host: 2223, id: "ssh", auto_correct: true
 
     web.vm.provider "virtualbox" do |vb|
       vb.name = "lab-web"
@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "nginx" do |nginx|
     nginx.vm.box = "rockylinux/9"
     nginx.vm.hostname = "nginx.lab.local"
-    nginx.vm.network "private_network", ip: "10.10.10.40"
+    nginx.vm.network "private_network", ip: "10.10.10.40", host: 2224, id: "ssh", auto_correct: true
 
     nginx.vm.provider "virtualbox" do |vb|
       vb.name = "lab-nginx"
@@ -100,7 +100,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "client" do |client|
     client.vm.box = "ubuntu/jammy64"
     client.vm.hostname = "client.lab.local"
-    client.vm.network "private_network", ip: "10.10.10.30"
+    client.vm.network "private_network", ip: "10.10.10.30", host: 2222, id: "ssh", auto_correct: true
 
     client.vm.provider "virtualbox" do |vb|
       vb.name = "lab-client"
