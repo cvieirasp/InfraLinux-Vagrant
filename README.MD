@@ -7,6 +7,7 @@ Este repositório contém um laboratório prático originado à partir das prát
 - **client:** Ubuntu 22.04 com utilitários de rede.
 - **nginx:** Rocky Linux 9 com Nginx instalado e serviço ativo.
 - **mail:** Rocky Linux 9 com Postfix (SMTP) e Dovecot (IMAP/POP3) instalados e serviços ativos.
+- **ldap:** Rocky Linux 9 com OpenLDAP instalado e serviço ativo.
 
 ## Objetivos do laboratório
 
@@ -16,6 +17,7 @@ Este repositório contém um laboratório prático originado à partir das prát
   - Servidor Web (Apache) - conceitos de serviço e diretórios padrão.
   - Servidor Proxy (Nginx) - conceitos do uso do Nginx como proxy reverso.
   - Servidor de Email (Postfix/Dovecot) - conceitos do uso das aplicações para envio, recebimento e acesso a emails.
+  - Servidor LDAP (OpenLDAP) - conceitos de diretório e autenticação centralizada.
   - Cliente Ubuntu - Máquina cliente para testes dos serviços dentro da rede.
 - Operar VMs com Vagrant: subir, acessar, pausar e destruir o ambiente de forma reprodutível.
 
@@ -28,6 +30,7 @@ Este repositório contém um laboratório prático originado à partir das prát
 | client.masterlab.com  | ubuntu 22.04  | Cliente                 | 10.10.10.30       |
 | nginx.masterlab.com   | Rocky Linux 9 | Proxy Reverso (NGINX)   | 10.10.10.40       |
 | mail.masterlab.com    | Rocky Linux 9 | Email (Postfix/Dovecot) | 10.10.10.50       |
+| ldap.masterlab.com    | Rocky Linux 9 | LDAP (OpenLDAP)         | 10.10.10.60       |
 
 > As VMs usam rede privada (10.10.10.0/24) apenas para comunicação entre elas e o adaptador NAT padrão do Vagrant é mantido para acesso à internet/updates.
 
@@ -41,13 +44,14 @@ Este repositório contém um laboratório prático originado à partir das prát
 1. Obtenha o projeto realizando download/clonagem do repositório para uma pasta local.
 2. Suba o ambiente no diretório onde encontra-se o arquivo ```Vagrantfile``` utilizando os seguintes comandos:
   - ```vagrant up``` (sobe todas as VMs) ou
-  - ```vagrant dns```, ```vagrant up web```, ```vagrant up client```, ```vagrant up nginx```, ```vagrant up mail``` (uma por vez).
+  - ```vagrant up dns```, ```vagrant up web```, ```vagrant up client```, ```vagrant up nginx```, ```vagrant up mail```, ```vagrant up ldap``` (uma por vez).
 3. Acesse as VMs:
   -  ```vagrant ssh dns```
   -  ```vagrant ssh web```
   -  ```vagrant ssh client```
   -  ```vagrant ssh nginx```
-  -  ```vagrant up mail```
+  -  ```vagrant ssh mail```
+  -  ```vagrant ssh ldap```
 4. Encerrar/suspender quando terminar
   - ```vagrant halt``` (desliga) ou ```vagrant suspend``` (suspende).
   - ```vagrant destroy``` (remove as VMs) quando quiser recriar do zero.
@@ -58,3 +62,4 @@ Este repositório contém um laboratório prático originado à partir das prát
 - [Configuração Web Server](docs/WEBSERVER.MD)
 - [Configuração Proxy Server](docs/PROXYSERVER.MD)
 - [Configuração Mail Server](docs/MAILSERVER.MD)
+- [Configuração LDAP Server](docs/LDAPSERVER.MD)

@@ -165,4 +165,44 @@ Vagrant.configure("2") do |config|
       ss -tlnp | grep -E ':587|:465|:993|:995' || echo "Nenhuma porta de email detectada ainda"
     SHELL
   end
+
+  # ====== LDAP: Rocky Linux 9 + OpenLDAP ======
+  config.vm.define "ldap" do |ldap|
+    ldap.vm.box = "rockylinux/9"
+    ldap.vm.hostname = "ldap.lab.local"
+    ldap.vm.network "private_network", ip: "10.10.10.60", host: 2226, id: "ssh", auto_correct: true
+
+    ldap.vm.provider "virtualbox" do |vb|
+      vb.name = "lab-ldap"
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+
+    ldap.vm.provision "shell", inline: <<-'SHELL'
+      set -euxo pipefail
+      
+      sudo dnf -y update
+      # Habilite o repositório 'plus' (específico para Rocky Linux 9):
+      sudo dnf config-manager --set-enabled plus
+      # Instala OpenLDAP server e cliente
+      sudo dnf -y install openldap openldap-servers openldap-clients
+
+      # Habilita/ativa firewall e libera porta LDAP
+      sudo systemctl enable --now firewalld
+      sudo firewall-cmd --permanent --add-service=ldap      # Porta 389
+      sudo firewall-cmd --permanent --add-service=ldaps     # Porta 636 (TLS)
+      sudo firewall-cmd --reload
+
+      # Habilita e inicia o serviço slapd (OpenLDAP)
+      sudo systemctl enable --now slapd
+
+      # Mensagem de estado
+      echo "===== STATUS: slapd ====="
+      systemctl --no-pager --full status slapd || true
+      
+      # Verificar portas LDAP
+      echo "===== PORTAS LDAP ====="
+      ss -tlnp | grep -E ':389|:636' || echo "Nenhuma porta LDAP detectada ainda"
+    SHELL
+  end
 end
