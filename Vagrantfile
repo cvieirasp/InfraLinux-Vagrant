@@ -138,10 +138,13 @@ Vagrant.configure("2") do |config|
 
       # Habilita/ativa firewall e libera portas de email
       sudo systemctl enable --now firewalld
-      sudo firewall-cmd --permanent --add-service=smtp      # Porta 25
+      # sudo firewall-cmd --permanent --add-service=smtp            # Porta 25
+      sudo firewall-cmd --permanent --add-service=smtps           # Porta 465
       sudo firewall-cmd --permanent --add-service=smtp-submission # Porta 587
-      sudo firewall-cmd --permanent --add-service=imap      # Porta 143
-      sudo firewall-cmd --permanent --add-service=pop3      # Porta 110
+      # sudo firewall-cmd --permanent --add-service=imap            # Porta 143
+      sudo firewall-cmd --permanent --add-service=imaps           # Porta 993
+      # sudo firewall-cmd --permanent --add-service=pop3            # Porta 110
+      sudo firewall-cmd --permanent --add-service=pop3s           # Porta 995
       sudo firewall-cmd --reload
 
       # Habilita e inicia Postfix (SMTP)
@@ -158,7 +161,8 @@ Vagrant.configure("2") do |config|
       
       # Verificar portas abertas
       echo "===== PORTAS DE EMAIL ====="
-      ss -tlnp | grep -E ':25|:587|:143|:110' || echo "Nenhuma porta de email detectada ainda"
+      # ss -tlnp | grep -E ':25|:587|:465|:143|:993|:110|:995' || echo "Nenhuma porta de email detectada ainda"
+      ss -tlnp | grep -E ':587|:465|:993|:995' || echo "Nenhuma porta de email detectada ainda"
     SHELL
   end
 end

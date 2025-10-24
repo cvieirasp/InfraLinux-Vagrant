@@ -47,6 +47,7 @@ Este repositório contém um laboratório prático originado à partir das prát
   -  ```vagrant ssh web```
   -  ```vagrant ssh client```
   -  ```vagrant ssh nginx```
+  -  ```vagrant up mail```
 4. Encerrar/suspender quando terminar
   - ```vagrant halt``` (desliga) ou ```vagrant suspend``` (suspende).
   - ```vagrant destroy``` (remove as VMs) quando quiser recriar do zero.
